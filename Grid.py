@@ -6,9 +6,20 @@ class Grid:
     def __init__(self, screen, position = (100, 100), cell_size=10, width=100, height=50, draw_only_outlines=False) -> None:
         self._screen = screen
         self._position = position
+
+
+        if cell_size <= 0:
+            raise TypeError("cell_size must be greater than 0")
         self._cell_size = cell_size
+
+        if width <= 0:
+            raise TypeError("width must be greater than 0")
         self._width = width
+
+        if height <= 0:
+            raise TypeError("height must be greater than 0")
         self._height = height
+
 
         self._grid_values = [[False]*width for _ in range(height)]
 

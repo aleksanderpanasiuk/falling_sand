@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 class Grid:
@@ -49,10 +50,29 @@ class Grid:
     def simulate(self) -> None:
         for i in range(self._height-2, 0, -1):
             for j in range(self._width):
-                if self._grid_values[i][j] and not self._grid_values[i+1][j]:
-                    self._grid_values[i][j] = False
-                    self._grid_values[i+1][j] = True
+                if self._grid_values[i][j]:
+                    if not self._grid_values[i+1][j]:
+                        self._grid_values[i][j] = False
+                        self._grid_values[i+1][j] = True
 
+                    elif i+2 < self._height:
+                        can_fall_left = j > 0 and not self._grid_values[i+1][j-1] and not self._grid_values[i+2][j-1]
+                        can_fall_right = j > 0 and not self._grid_values[i+1][j+1] and not self._grid_values[i+2][j+1]
+                        fall_left = False
+
+                        if can_fall_left and can_fall_right:
+                            fall_left = random.choice([True, False])
+                        elif can_fall_left:
+                            fall_left = True
+                        elif not can_fall_left and not can_fall_right:
+                            continue
+
+                        if fall_left:
+                            self._grid_values[i][j] = False
+                            self._grid_values[i+1][j-1] = True
+                        else:
+                            self._grid_values[i][j] = False
+                            self._grid_values[i+1][j+1] = True
 
 
     def draw(self) -> None:

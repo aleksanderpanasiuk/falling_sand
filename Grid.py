@@ -58,7 +58,7 @@ class Grid:
 
 
     def simulate(self) -> None:
-        for i in range(self._height-2, 0, -1):
+        for i in range(self._height-2, -1, -1):
             for j in range(self._width):
                 if self._grid_values[i][j]:
                     if not self._grid_values[i+1][j]:

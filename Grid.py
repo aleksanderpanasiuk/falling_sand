@@ -16,6 +16,8 @@ class Grid:
 
         self.draw_only_outlines = draw_only_outlines
 
+        self._cell_color = (255, 255, 102)
+
 
     def events(self, event: pygame.event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -30,6 +32,7 @@ class Grid:
         mouse_position_on_grid = self._calculate_mouse_position_on_grid(mouse_pos)
 
         print(mouse_position_on_grid)
+        self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = True
 
 
     def _is_mouse_on_grid(self, mouse_pos: tuple) -> bool:
@@ -49,6 +52,7 @@ class Grid:
             self._draw_inside()
 
         self._draw_outlines()
+        self._draw_cells()
 
 
     def _draw_inside(self) -> None:
@@ -89,3 +93,16 @@ class Grid:
                              (self._position[0] + (self._width*self._cell_size), self._position[1]),
                              (self._position[0] + self._width*self._cell_size, self._position[1] + (self._height*self._cell_size)),
                              self._grid_width)
+
+
+    def _draw_cells(self) -> None:
+        for i, line in enumerate(self._grid_values):
+            for j, cell in enumerate(line):
+                if cell:
+                    pygame.draw.rect(self._screen, self._cell_color,
+                        pygame.Rect(
+                            self._position[0] + j*self._cell_size, self._position[1] + i*self._cell_size,
+                            self._cell_size, self._cell_size
+                        )
+                    )
+

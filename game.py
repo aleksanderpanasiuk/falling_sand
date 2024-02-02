@@ -1,4 +1,5 @@
 import pygame
+import Grid
 
 
 class Game:
@@ -8,23 +9,35 @@ class Game:
 
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.clock = pygame.time.Clock()
+        self._screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self._clock = pygame.time.Clock()
+
+        self._grid = Grid.Grid(self._screen)
 
 
     def run(self) -> None:
-        self.running = True
+        self._running = True
 
-        while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+        while self._running:
+            self._events()
 
+            self._draw()
 
-            pygame.draw.line(self.screen, (255, 255, 255), (100, 100), (200, 200))
-
-            pygame.display.flip()
-            self.screen.fill(self.BACKGROUND_COLOR)
-            self.clock.tick(self.FPS)
+            self._clock.tick(self.FPS)
 
         pygame.quit()
+
+
+    def _events(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self._running = False
+
+
+    def _draw(self) -> None:
+        self._screen.fill(self.BACKGROUND_COLOR)
+
+        self._grid.draw()
+
+        pygame.display.flip()
+

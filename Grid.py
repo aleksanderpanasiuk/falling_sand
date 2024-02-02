@@ -18,7 +18,7 @@ class Grid:
         self.draw_only_outlines = draw_only_outlines
 
         self._cell_color = (255, 255, 102)
-
+        self._max_stack = 1
 
     def events(self, event: pygame.event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -55,9 +55,18 @@ class Grid:
                         self._grid_values[i][j] = False
                         self._grid_values[i+1][j] = True
 
-                    elif i+2 < self._height:
-                        can_fall_left = j > 0 and not self._grid_values[i+1][j-1] and not self._grid_values[i+2][j-1]
-                        can_fall_right = j > 0 and not self._grid_values[i+1][j+1] and not self._grid_values[i+2][j+1]
+                    elif i+self._max_stack < self._height:
+                        can_fall_left = j > 0
+                        can_fall_right = j+1 < self._width
+
+
+                        for k in range(1, self._max_stack+1):
+                            if j > 0 and self._grid_values[i+k][j-1]:
+                                can_fall_left = False
+                            if j+1 < self._width and self._grid_values[i+k][j+1]:
+                                can_fall_right = False
+
+
                         fall_left = False
 
                         if can_fall_left and can_fall_right:

@@ -31,7 +31,6 @@ class Grid:
 
         mouse_position_on_grid = self._calculate_mouse_position_on_grid(mouse_pos)
 
-        print(mouse_position_on_grid)
         self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = True
 
 
@@ -45,6 +44,15 @@ class Grid:
                                 (mouse_pos[1]-self._position[1])//self._cell_size
 
         return mouse_position_on_grid
+
+
+    def simulate(self) -> None:
+        for i in range(self._height-2, 0, -1):
+            for j in range(self._width):
+                if self._grid_values[i][j] and not self._grid_values[i+1][j]:
+                    self._grid_values[i][j] = False
+                    self._grid_values[i+1][j] = True
+
 
 
     def draw(self) -> None:

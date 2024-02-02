@@ -20,7 +20,7 @@ class Game:
 
         while self._running:
             self._events()
-
+            self._simulate()
             self._draw()
 
             self._clock.tick(self.FPS)
@@ -38,6 +38,10 @@ class Game:
                     self._running = False
 
             self._grid.events(event)
+
+
+    def _simulate(self) -> None:
+        self._grid.simulate()
 
 
     def _draw(self) -> None:

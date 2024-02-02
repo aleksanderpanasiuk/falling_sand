@@ -11,7 +11,7 @@ class Grid:
 
         self._grid_values = [[False]*width for _ in range(height)]
 
-        self._grid_color = (255, 255, 255)
+        self._grid_color = (100, 100, 100)
         self._grid_width = 1
 
         self.draw_only_outlines = draw_only_outlines

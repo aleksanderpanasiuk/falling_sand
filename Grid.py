@@ -29,6 +29,8 @@ class Grid:
 
         mouse_position_on_grid = self._calculate_mouse_position_on_grid(mouse_pos)
 
+        print(mouse_position_on_grid)
+
 
     def _is_mouse_on_grid(self, mouse_pos: tuple) -> bool:
         return self._position[0] <= mouse_pos[0] <= self._position[0] + (self._width*self._cell_size) and \
@@ -36,7 +38,10 @@ class Grid:
 
 
     def _calculate_mouse_position_on_grid(self, mouse_pos: tuple) -> tuple:
-        pass
+        mouse_position_on_grid = (mouse_pos[0]-self._position[0])//self._cell_size, \
+                                (mouse_pos[1]-self._position[1])//self._cell_size
+
+        return mouse_position_on_grid
 
 
     def draw(self) -> None:

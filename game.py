@@ -33,6 +33,10 @@ class Game:
             if event.type == pygame.QUIT:
                 self._running = False
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self._running = False
+
             self._grid.events(event)
 
 

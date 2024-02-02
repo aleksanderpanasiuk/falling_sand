@@ -46,8 +46,8 @@ class Grid:
 
 
     def _is_mouse_on_grid(self, mouse_pos: tuple) -> bool:
-        return self._position[0] <= mouse_pos[0] <= self._position[0] + (self._width*self._cell_size) and \
-            self._position[1] <= mouse_pos[1] <= self._position[1] + (self._height*self._cell_size)
+        return self._position[0] <= mouse_pos[0] < self._position[0] + (self._width*self._cell_size) and \
+            self._position[1] <= mouse_pos[1] < self._position[1] + (self._height*self._cell_size)
 
 
     def _calculate_mouse_position_on_grid(self, mouse_pos: tuple) -> tuple:

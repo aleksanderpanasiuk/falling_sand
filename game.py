@@ -33,6 +33,8 @@ class Game:
             if event.type == pygame.QUIT:
                 self._running = False
 
+            self._grid.events(event)
+
 
     def _draw(self) -> None:
         self._screen.fill(self.BACKGROUND_COLOR)

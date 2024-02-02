@@ -3,7 +3,7 @@ import random
 
 
 class Grid:
-    def __init__(self, screen, position = (100, 100), cell_size=10, width=100, height=50, draw_only_outlines=False) -> None:
+    def __init__(self, screen=None, position = (100, 100), cell_size=10, width=100, height=50, draw_only_outlines=False) -> None:
         self._screen = screen
         self._position = position
 
@@ -96,6 +96,9 @@ class Grid:
 
 
     def draw(self) -> None:
+        if self._screen is None:
+            return
+
         if not self.draw_only_outlines:
             self._draw_inside()
 

@@ -29,7 +29,6 @@ class Grid:
 
         self.draw_only_outlines = draw_only_outlines
 
-        self._cell_color = (255, 255, 102)
         self._max_stack = 1
 
     def events(self, event: pygame.event) -> None:

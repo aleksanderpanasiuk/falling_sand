@@ -1,5 +1,6 @@
 import pygame
 import Sand
+import Rock
 
 
 class Grid:

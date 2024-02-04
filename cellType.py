@@ -2,13 +2,15 @@ import pygame
 
 
 class CellType:
-    def __init__(self, screen, screen_position: tuple, grid_position: tuple, size: int) -> None:
+    def __init__(self, screen, screen_position: tuple, grid_position: tuple, size: int):
         self._screen = screen
         self._screen_position = screen_position
         self._grid_position = grid_position
         self._size = size
 
         self._color = (255, 255, 255)
+
+        return self
 
 
     def events(self) -> None:

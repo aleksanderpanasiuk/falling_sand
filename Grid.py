@@ -1,6 +1,6 @@
 import pygame
 import random
-import cellType
+import Sand
 
 
 class Grid:
@@ -22,7 +22,7 @@ class Grid:
         self._height = height
 
 
-        self._grid_values = [[False]*width for _ in range(height)]
+        self._grid_values = [[None]*width for _ in range(height)]
 
         self._grid_color = (100, 100, 100)
         self._grid_width = 1
@@ -42,8 +42,15 @@ class Grid:
             return
 
         mouse_position_on_grid = self._calculate_mouse_position_on_grid(mouse_pos)
+        self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = None
 
-        self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = True
+        self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
+            Sand.Sand(
+                self._screen,
+                (self._position[0] + mouse_position_on_grid[0]*self._cell_size,
+                 self._position[1] + mouse_position_on_grid[1]*self._cell_size,),
+                mouse_position_on_grid, self._cell_size
+                )
 
 
     def _is_mouse_on_grid(self, mouse_pos: tuple) -> bool:
@@ -62,37 +69,7 @@ class Grid:
         for i in range(self._height-2, -1, -1):
             for j in range(self._width):
                 if self._grid_values[i][j]:
-                    if not self._grid_values[i+1][j]:
-                        self._grid_values[i][j] = False
-                        self._grid_values[i+1][j] = True
-
-                    elif i+self._max_stack < self._height:
-                        can_fall_left = j > 0
-                        can_fall_right = j+1 < self._width
-
-
-                        for k in range(1, self._max_stack+1):
-                            if j > 0 and self._grid_values[i+k][j-1]:
-                                can_fall_left = False
-                            if j+1 < self._width and self._grid_values[i+k][j+1]:
-                                can_fall_right = False
-
-
-                        fall_left = False
-
-                        if can_fall_left and can_fall_right:
-                            fall_left = random.choice([True, False])
-                        elif can_fall_left:
-                            fall_left = True
-                        elif not can_fall_left and not can_fall_right:
-                            continue
-
-                        if fall_left:
-                            self._grid_values[i][j] = False
-                            self._grid_values[i+1][j-1] = True
-                        else:
-                            self._grid_values[i][j] = False
-                            self._grid_values[i+1][j+1] = True
+                    pass
 
 
     def draw(self) -> None:
@@ -150,10 +127,4 @@ class Grid:
         for i, line in enumerate(self._grid_values):
             for j, cell in enumerate(line):
                 if cell:
-                    pygame.draw.rect(self._screen, self._cell_color,
-                        pygame.Rect(
-                            self._position[0] + j*self._cell_size, self._position[1] + i*self._cell_size,
-                            self._cell_size, self._cell_size
-                        )
-                    )
-
+                    cell.draw()

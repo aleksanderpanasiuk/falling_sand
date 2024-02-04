@@ -10,8 +10,6 @@ class CellType:
 
         self._color = (255, 255, 255)
 
-        return self
-
 
     def events(self) -> None:
         pass
@@ -21,7 +19,7 @@ class CellType:
         pygame.draw.rect(
             self._screen, self._color,
             pygame.Rect(
-                self._screen_position[0], self._screen_position[0],
+                self._screen_position[0], self._screen_position[1],
                 self._size, self._size
             )
         )

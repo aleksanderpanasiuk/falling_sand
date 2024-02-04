@@ -1,10 +1,9 @@
 import pygame
-import random
 import Sand
 
 
 class Grid:
-    def __init__(self, screen=None, position = (100, 100), cell_size=10, width=100, height=50, draw_only_outlines=False) -> None:
+    def __init__(self, screen=None, position = [100, 100], cell_size=10, width=100, height=50, draw_only_outlines=False) -> None:
         self._screen = screen
         self._position = position
 
@@ -29,7 +28,6 @@ class Grid:
 
         self.draw_only_outlines = draw_only_outlines
 
-        self._max_stack = 1
 
     def events(self, event: pygame.event) -> None:
         if pygame.mouse.get_pressed()[0]:
@@ -46,8 +44,8 @@ class Grid:
         self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
             Sand.Sand(
                 self._screen,
-                (self._position[0] + mouse_position_on_grid[0]*self._cell_size,
-                 self._position[1] + mouse_position_on_grid[1]*self._cell_size,),
+                [self._position[0] + mouse_position_on_grid[0]*self._cell_size,
+                 self._position[1] + mouse_position_on_grid[1]*self._cell_size],
                 mouse_position_on_grid, self._cell_size
                 )
 
@@ -58,8 +56,8 @@ class Grid:
 
 
     def _calculate_mouse_position_on_grid(self, mouse_pos: tuple) -> tuple:
-        mouse_position_on_grid = (mouse_pos[0]-self._position[0])//self._cell_size, \
-                                (mouse_pos[1]-self._position[1])//self._cell_size
+        mouse_position_on_grid = [(mouse_pos[0]-self._position[0])//self._cell_size, \
+                                (mouse_pos[1]-self._position[1])//self._cell_size]
 
         return mouse_position_on_grid
 
@@ -68,7 +66,7 @@ class Grid:
         for i in range(self._height-2, -1, -1):
             for j in range(self._width):
                 if self._grid_values[i][j]:
-                    pass
+                    self._grid_values[i][j].simulate(self._grid_values)
 
 
     def draw(self) -> None:

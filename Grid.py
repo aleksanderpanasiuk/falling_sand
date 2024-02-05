@@ -1,6 +1,7 @@
 import pygame
 import Sand
 import Rock
+import Water
 
 
 class Grid:
@@ -29,7 +30,7 @@ class Grid:
 
         self.draw_only_outlines = draw_only_outlines
 
-        self._materials = ["sand", "rock"]
+        self._materials = ["sand", "rock", "water"]
         self._current_material = 0
 
 
@@ -42,6 +43,8 @@ class Grid:
                 self._current_material = 0
             elif event.key == pygame.K_2:
                 self._current_material = 1
+            elif event.key == pygame.K_3:
+                self._current_material = 2
 
     def _spawn_cell(self, mouse_pos: tuple) -> None:
         if not self._is_mouse_on_grid(mouse_pos):
@@ -66,6 +69,15 @@ class Grid:
                     self._position[1] + mouse_position_on_grid[1]*self._cell_size],
                     mouse_position_on_grid, self._cell_size
                     )
+        elif self._materials[self._current_material] == "water":
+            self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
+                Water.Water(
+                    self._screen,
+                    [self._position[0] + mouse_position_on_grid[0]*self._cell_size,
+                    self._position[1] + mouse_position_on_grid[1]*self._cell_size],
+                    mouse_position_on_grid, self._cell_size
+                    )
+
 
 
     def _is_mouse_on_grid(self, mouse_pos: tuple) -> bool:

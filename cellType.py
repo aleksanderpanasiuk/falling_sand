@@ -62,17 +62,25 @@ class CellType:
                 self._move(grid, [1, 1])
 
     def _move(self, grid, direction: list):
-        grid[self._grid_position[1]][self._grid_position[0]] = None
-        grid[self._grid_position[1]+direction[1]][self._grid_position[0]+direction[0]] = self
-        self._grid_position[1] += direction[1]
-        self._grid_position[0] += direction[0]
-        self._screen_position[1] += self._size * direction[1]
-        self._screen_position[0] += self._size * direction[0]
+        grid[self._grid_position[1]][self._grid_position[0]], grid[self._grid_position[1]+direction[1]][self._grid_position[0]+direction[0]] = \
+        grid[self._grid_position[1]+direction[1]][self._grid_position[0]+direction[0]], grid[self._grid_position[1]][self._grid_position[0]]
+
+        if grid[self._grid_position[1]][self._grid_position[0]]:
+            grid[self._grid_position[1]][self._grid_position[0]].change_position([-direction[0], -direction[1]])
+
+        self.change_position(direction)
 
 
     @property
     def denstity(self):
         return self._density
+
+
+    def change_position(self, direction):
+        self._grid_position[1] += direction[1]
+        self._grid_position[0] += direction[0]
+        self._screen_position[1] += self._size * direction[1]
+        self._screen_position[0] += self._size * direction[0]
 
 
     def _is_valid_position(self, grid, position) -> bool:

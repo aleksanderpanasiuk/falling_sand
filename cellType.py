@@ -70,8 +70,16 @@ class CellType:
         self._screen_position[0] += self._size * direction[0]
 
 
+    @property
+    def denstity(self):
+        return self._density
+
+
     def _is_valid_position(self, grid, position) -> bool:
         if 0 <= position[1] < len(grid) and 0 <= position[0] < len(grid[0]):
-            return not grid[position[1]][position[0]]
+            if not grid[position[1]][position[0]]:
+                return True
+
+            return self._density > grid[position[1]][position[0]].denstity
 
         return False

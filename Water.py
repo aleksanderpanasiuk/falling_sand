@@ -8,21 +8,22 @@ class Water(CellType):
 
         self._color = (0, 102, 255)
         self._last_random_direction = -1
+        self._density = 1
 
     def simulate(self, grid):
         height = len(grid)
         width = len(grid[0])
 
-        if not grid[self._grid_position[1]+1][self._grid_position[0]]:
+        if self._is_valid_position(grid, [self._grid_position[0], self._grid_position[1]+1]):
             self._move(grid, [0, 1])
 
         else:
             can_move_right = False
             can_move_left = False
 
-            if self._grid_position[0]+1 < width and not grid[self._grid_position[1]][self._grid_position[0]+1]:
+            if self._is_valid_position(grid, [self._grid_position[0]+1, self._grid_position[1]]):
                 can_move_right = True
-            if self._grid_position[0]-1 >= 0 and not grid[self._grid_position[1]][self._grid_position[0]-1]:
+            if self._is_valid_position(grid, [self._grid_position[0]-1, self._grid_position[1]]):
                 can_move_left = True
 
             fall_left = False

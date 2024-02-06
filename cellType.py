@@ -12,6 +12,7 @@ class CellType:
         self._color = (255, 255, 255)
 
         self._max_stack = 1
+        self._density = 2
 
 
     def events(self) -> None:
@@ -31,7 +32,7 @@ class CellType:
         height = len(grid)
         width = len(grid[0])
 
-        if not grid[self._grid_position[1]+1][self._grid_position[0]]:
+        if self._is_valid_position(grid, [self._grid_position[0], self._grid_position[1]+1]):
             self._move(grid, [0, 1])
 
         elif self._grid_position[1]+self._max_stack < height:
@@ -40,9 +41,9 @@ class CellType:
 
 
             for k in range(1, self._max_stack+1):
-                if self._grid_position[0] > 0 and grid[self._grid_position[1]+k][self._grid_position[0]-1]:
+                if not self._is_valid_position(grid, [self._grid_position[0]-1, self._grid_position[1]+k]):
                     can_fall_left = False
-                if self._grid_position[0]+1 < width and grid[self._grid_position[1]+k][self._grid_position[0]+1]:
+                if not self._is_valid_position(grid, [self._grid_position[0]+1, self._grid_position[1]+k]):
                     can_fall_right = False
 
 
@@ -67,3 +68,10 @@ class CellType:
         self._grid_position[0] += direction[0]
         self._screen_position[1] += self._size * direction[1]
         self._screen_position[0] += self._size * direction[0]
+
+
+    def _is_valid_position(self, grid, position) -> bool:
+        if 0 <= position[1] < len(grid) and 0 <= position[0] < len(grid[0]):
+            return not grid[position[1]][position[0]]
+
+        return False

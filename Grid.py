@@ -30,30 +30,18 @@ class Grid:
 
         self.draw_only_outlines = draw_only_outlines
 
-        self._materials = ["sand", "rock", "water"]
-        self._current_material = 0
-
 
     def events(self, event: pygame.event) -> None:
-        if pygame.mouse.get_pressed()[0]:
-            self._spawn_cell(pygame.mouse.get_pos())
+        pass
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_1:
-                self._current_material = 0
-            elif event.key == pygame.K_2:
-                self._current_material = 1
-            elif event.key == pygame.K_3:
-                self._current_material = 2
-
-    def _spawn_cell(self, mouse_pos: tuple) -> None:
+    def spawn_cell(self, mouse_pos: tuple, material: str) -> None:
         if not self._is_mouse_on_grid(mouse_pos):
             return
 
         mouse_position_on_grid = self._calculate_mouse_position_on_grid(mouse_pos)
         self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = None
 
-        if self._materials[self._current_material] == "sand":
+        if material == "sand":
             self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
                 Sand.Sand(
                     self._screen,
@@ -61,7 +49,7 @@ class Grid:
                     self._position[1] + mouse_position_on_grid[1]*self._cell_size],
                     mouse_position_on_grid, self._cell_size
                     )
-        elif self._materials[self._current_material] == "rock":
+        elif material == "rock":
             self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
                 Rock.Rock(
                     self._screen,
@@ -69,7 +57,7 @@ class Grid:
                     self._position[1] + mouse_position_on_grid[1]*self._cell_size],
                     mouse_position_on_grid, self._cell_size
                     )
-        elif self._materials[self._current_material] == "water":
+        elif material == "water":
             self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
                 Water.Water(
                     self._screen,

@@ -14,6 +14,9 @@ class Game:
 
         self._grid = Grid.Grid(self._screen)
 
+        self._materials = ["sand", "rock", "water"]
+        self._current_material = 0
+
 
     def run(self) -> None:
         self._running = True
@@ -36,6 +39,16 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self._running = False
+
+                if event.key == pygame.K_1:
+                    self._current_material = 0
+                elif event.key == pygame.K_2:
+                    self._current_material = 1
+                elif event.key == pygame.K_3:
+                    self._current_material = 2
+
+            if pygame.mouse.get_pressed()[0]:
+                self._grid.spawn_cell(pygame.mouse.get_pos(), self._materials[self._current_material])
 
             self._grid.events(event)
 

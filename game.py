@@ -1,5 +1,6 @@
 import pygame
 import Grid
+from utils import button
 
 
 class Game:
@@ -16,6 +17,11 @@ class Game:
 
         self._materials = ["sand", "rock", "water"]
         self._current_material = 0
+
+        self._sand_button = button.Button(
+            self._screen, (30, 30), 50, 100, (255, 255, 102),
+            "Sand: 1", 35, (60, 60, 60)
+            )
 
 
     def run(self) -> None:
@@ -61,6 +67,8 @@ class Game:
         self._screen.fill(self.BACKGROUND_COLOR)
 
         self._grid.draw()
+
+        self._sand_button.draw()
 
         pygame.display.flip()
 

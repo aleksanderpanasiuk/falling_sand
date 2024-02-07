@@ -11,11 +11,8 @@ class Water(CellType):
         self._density = 1
 
     def simulate(self, grid):
-        height = len(grid)
-        width = len(grid[0])
-
-        if self._is_valid_position(grid, [self._grid_position[0], self._grid_position[1]+1]):
-            self._move(grid, [0, 1])
+        if self._fall(grid):
+            return
 
         else:
             can_move_right = False

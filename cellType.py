@@ -28,12 +28,20 @@ class CellType:
             )
         )
 
+    def _fall(self, grid) -> bool:
+        if self._is_valid_position(grid, [self._grid_position[0], self._grid_position[1]+1]):
+            self._move(grid, [0, 1])
+            return True
+
+        return False
+
+
     def simulate(self, grid):
         height = len(grid)
         width = len(grid[0])
 
-        if self._is_valid_position(grid, [self._grid_position[0], self._grid_position[1]+1]):
-            self._move(grid, [0, 1])
+        if self._fall(grid):
+            return
 
         elif self._grid_position[1]+self._max_stack < height:
             can_fall_left = self._grid_position[0] > 0

@@ -19,17 +19,17 @@ class Game:
         self._current_material = 0
 
         self._sand_button = button.Button(
-            self._screen, (30, 30), 50, 100, (255, 255, 102),
+            self._screen, (self.SCREEN_WIDTH/2 - 130 - 50, 30), 50, 100, (255, 255, 102),
             "Sand: 1", 35, (60, 60, 60)
             )
 
         self._rock_button = button.Button(
-            self._screen, (160, 30), 50, 100, (60, 60, 60),
+            self._screen, (self.SCREEN_WIDTH/2 - 50, 30), 50, 100, (60, 60, 60),
             "Rock: 2", 35, (200, 200, 200)
             )
 
         self._water_button = button.Button(
-            self._screen, (290, 30), 50, 100, (0, 102, 255),
+            self._screen, (self.SCREEN_WIDTH/2 + 130 - 50, 30), 50, 100, (0, 102, 255),
             "Water: 3", 35, (200, 200, 200)
             )
 

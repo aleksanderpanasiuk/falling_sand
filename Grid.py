@@ -2,6 +2,7 @@ import pygame
 import Sand
 import Rock
 import Water
+import Grass
 
 
 class Grid:
@@ -60,6 +61,14 @@ class Grid:
         elif material == "water":
             self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
                 Water.Water(
+                    self._screen,
+                    [self._position[0] + mouse_position_on_grid[0]*self._cell_size,
+                    self._position[1] + mouse_position_on_grid[1]*self._cell_size],
+                    mouse_position_on_grid, self._cell_size
+                    )
+        elif material == "grass":
+            self._grid_values[mouse_position_on_grid[1]][mouse_position_on_grid[0]] = \
+                Grass.Grass(
                     self._screen,
                     [self._position[0] + mouse_position_on_grid[0]*self._cell_size,
                     self._position[1] + mouse_position_on_grid[1]*self._cell_size],

@@ -15,7 +15,7 @@ class Game:
 
         self._grid = Grid.Grid(self._screen)
 
-        self._materials = ["sand", "rock", "water"]
+        self._materials = ["sand", "rock", "water", "grass"]
         self._current_material = 0
 
         self._sand_button = button.Button(
@@ -62,6 +62,9 @@ class Game:
                     self._current_material = 1
                 elif event.key == pygame.K_3:
                     self._current_material = 2
+                elif event.key == pygame.K_4:
+                    self._current_material = 3
+
 
             if pygame.mouse.get_pressed()[0]:
                 self._grid.spawn_cell(pygame.mouse.get_pos(), self._materials[self._current_material])
